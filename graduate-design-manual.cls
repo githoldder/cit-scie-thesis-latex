@@ -18,7 +18,9 @@
 \RequirePackage{amsmath, amssymb, mathtools}
 \RequirePackage{graphicx}
 \RequirePackage{float}
-\RequirePackage[labelfont=bf,justification=centering]{caption}
+\RequirePackage[justification=centering]{caption}
+% 让图/表标签与编号之间留半角空格，例如"图 1-1"而不是"图1-1"
+\DeclareCaptionLabelFormat{spaced}{#1~#2}
 \RequirePackage{tabularx, booktabs, longtable, multirow}
 \RequirePackage[pdfusetitle, hidelinks]{hyperref}
 \RequirePackage[numbers,super,square]{gbt7714}
@@ -30,6 +32,8 @@
 \RequirePackage{enumitem}
 \pretocmd{\section}{\clearpage}{}{}
 \renewcommand{\baselinestretch}{1.0}
+% 中英文混排断行容差：留少量预算兜底防溢出，但优先让 LaTeX 选英文连字符断词
+\setlength{\emergencystretch}{1em}
 % 导入代码与算法相关宏包
 \RequirePackage{listings}       % 基础代码环境
 \RequirePackage{algorithm}      % 算法框架
@@ -70,19 +74,19 @@
 \renewcommand{\normalsize}{%
     \songti
     \Times
-    \fontsize{12pt}{18pt}\selectfont
+    \fontsize{12pt}{20pt}\selectfont
     \xeCJKsetup{CJKglue=\hspace{0.2pt plus 0.05pt}}
 }
 
 \setlength{\parskip}{0pt}
 \AtBeginEnvironment{tabular}{
-    \songti\Times\fontsize{10.5pt}{15.75pt}\selectfont
+    \songti\Times\fontsize{10.5pt}{20pt}\selectfont
 }
 \AtBeginEnvironment{tabularx}{
-    \songti\Times\fontsize{10.5pt}{15.75pt}\selectfont
+    \songti\Times\fontsize{10.5pt}{20pt}\selectfont
 }
 \AtBeginEnvironment{longtable}{
-    \songti\Times\fontsize{10.5pt}{15.75pt}\selectfont
+    \songti\Times\fontsize{10.5pt}{20pt}\selectfont
 }
 \newcolumntype{Y}{>{\centering\arraybackslash}X}
 % 2. 版面设置
@@ -93,7 +97,7 @@
     left=3.0cm,         % 左边距
     right=3.0cm,        % 右边距
     bindingoffset=0.5cm,% 装订线（左侧 0.5cm）
-    headheight=15pt,    % 页眉高度
+    headheight=18pt,    % 页眉高度（fancyhdr 要求 ≥18pt）
     headsep=0.5cm,      % 算式：top(2.5) - 页眉(1.5) - headheight 约等于 0.5cm
     footskip=0.75cm     % 算式：bottom(2.5) - 页脚(1.75) = 0.75cm
 }
@@ -303,7 +307,7 @@
 {
     \clearpage
     \thispagestyle{empty}
-    
+
     % 标题
     \begin{center}
         {\songti\bfseries\fontsize{22pt}{33pt}\selectfont 毕业论文（设计）独创性声明}
@@ -369,7 +373,7 @@
 \usepackage[titles]{tocloft}
 
 %2. 统一字体定义：目录内容小四，1.5倍行距
-\newcommand{\tocfont}{\songti\fontsize{12pt}{18pt}\selectfont}
+\newcommand{\tocfont}{\songti\fontsize{12pt}{20pt}\selectfont}
 
 %3. 目录标题：二号宋体加粗居中
 \renewcommand{\contentsname}{\songti\bfseries\fontsize{22pt}{22pt}\selectfont 目录}
@@ -410,14 +414,16 @@
 \newcommand{\contents}
 {
     \clearpage
-    
+
     \setlength{\parskip}{0pt}
     \ctexset{section={name={第,章}}}
 
+    % 目录使用大写罗马数字，从 I 开始；正文 \mainbody 再切回 arabic
+    \pagenumbering{Roman}
     \pagestyle{fancy}
 
     \tableofcontents
-    
+
     \clearpage
 }
 
@@ -430,19 +436,20 @@
 }
 
 %9. 插图、表格、公式格式化
-\DeclareCaptionFont{five}{\songti\Times\fontsize{10.5pt}{15.75pt}\selectfont}
+\DeclareCaptionFont{five}{\songti\Times\fontsize{10.5pt}{20pt}\selectfont}
 % 三线表线宽（精确控制）
 \setlength{\aboverulesep}{0pt}
 \setlength{\belowrulesep}{0pt}
 \setlength{\heavyrulewidth}{0.053cm}   % 上下边线
 \setlength{\lightrulewidth}{0.0265cm}  % 表头分割线
 \DeclareCaptionFont{tablefont}{
-    \songti\Times\fontsize{10.5pt}{15.75pt}\selectfont
+    \songti\Times\fontsize{10.5pt}{20pt}\selectfont
 }
 % 表题字体：五号，宋体+Times，1.5倍行距
 \captionsetup[table]{
     font=tablefont,
     labelsep=quad,
+    labelformat=spaced,
     justification=centering,
     position=top,
     skip=6pt,
@@ -461,6 +468,7 @@
 \captionsetup{
     font=five,
     labelsep=quad,
+    labelformat=spaced,
     justification=centering,
     singlelinecheck=false
 }
@@ -529,7 +537,7 @@
     \addcontentsline{toc}{section}{附录}
     
     % 正文格式（与主体一致）
-    \songti\Times\fontsize{12pt}{18pt}\selectfont
+    \songti\Times\fontsize{12pt}{20pt}\selectfont
     \xeCJKsetup{CJKglue=\hspace{0.2pt plus 0.05pt}}
 }
 {
