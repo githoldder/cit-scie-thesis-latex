@@ -32,8 +32,8 @@
 \RequirePackage{enumitem}
 \pretocmd{\section}{\clearpage}{}{}
 \renewcommand{\baselinestretch}{1.0}
-% 中英文混排断行容差：留少量预算兜底防溢出，但优先让 LaTeX 选英文连字符断词
-\setlength{\emergencystretch}{1em}
+% 中英文混排断行容差
+\setlength{\emergencystretch}{2em}
 % 导入代码与算法相关宏包
 \RequirePackage{listings}       % 基础代码环境
 \RequirePackage{mdframed}       % 用于给代码块画连续背景，避免 listings 逐行画背景的细缝
