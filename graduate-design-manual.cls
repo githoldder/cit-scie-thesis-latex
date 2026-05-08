@@ -36,6 +36,7 @@
 \setlength{\emergencystretch}{1em}
 % 导入代码与算法相关宏包
 \RequirePackage{listings}       % 基础代码环境
+\RequirePackage{mdframed}       % 用于给代码块画连续背景，避免 listings 逐行画背景的细缝
 \RequirePackage{algorithm}      % 算法框架
 \RequirePackage{algpseudocode}  % 伪代码逻辑
 \RequirePackage{newfloat}       % 用于定义新的浮动体
@@ -211,7 +212,7 @@
     };
     \draw (title.south west)++(0mm,23mm) -- ++(\coverTitleAreaWidth,0mm);
     \ifx\@coverTitleSecond\@empty\else
-        \draw (title.south west)++(0mm,8mm) -- ++(\coverTitleAreaWidth,0mm);
+        \draw (title.south west)++(0mm,7mm) -- ++(\coverTitleAreaWidth,0mm);
     \fi
 }
 
@@ -559,14 +560,26 @@
 \counterwithin{algorithm}{section}
 \renewcommand{\thealgorithm}{\thesection-\arabic{algorithm}}
 \floatname{algorithm}{算法}
+% 用 mdframed 给 lstlisting 包一层连续灰底（替代 listings 逐行 backgroundcolor）
+\definecolor{codeBg}{RGB}{217,217,217}
+\surroundwithmdframed[
+    backgroundcolor=codeBg,
+    linewidth=0pt,
+    skipabove=10pt,
+    skipbelow=10pt,
+    innerleftmargin=6pt,
+    innerrightmargin=6pt,
+    innertopmargin=6pt,
+    innerbottommargin=6pt,
+]{lstlisting}
+
 \lstset{
     basicstyle=\songti\Times\fontsize{10.5pt}{12pt}\selectfont,
     columns=flexible,
     breaklines=true,
     breakatwhitespace=false,
     frame=none,
-    backgroundcolor=\color[RGB]{217,217,217},
-    framesep=6pt,
+    framesep=0pt,
     showstringspaces=false,
     showspaces=false,
     showtabs=false,
