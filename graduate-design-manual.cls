@@ -95,8 +95,8 @@
     a4paper,
     top=2.5cm,          % 上边距
     bottom=2.5cm,       % 下边距
-    left=3.0cm,         % 左边距
-    right=3.0cm,        % 右边距
+    left=2.1cm,         % 左边距
+    right=2.1cm,        % 右边距
     bindingoffset=0.5cm,% 装订线（左侧 0.5cm）
     headheight=18pt,    % 页眉高度（fancyhdr 要求 ≥18pt）
     headsep=0.5cm,      % 算式：top(2.5) - 页眉(1.5) - headheight 约等于 0.5cm
