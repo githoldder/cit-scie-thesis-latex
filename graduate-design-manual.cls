@@ -6,10 +6,11 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{graduate-design-manual}[2026/01/15 v1.4 CZU Class]
 
-\DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexart}}
 \ProcessOptions\relax
 \LoadClass[UTF8, fontset=none, 12pt, a4paper, twoside]{ctexart}
 \RequirePackage{geometry}
+\RequirePackage{etoolbox}
 \RequirePackage{titlesec}
 \RequirePackage{titletoc}
 \RequirePackage{subcaption}
@@ -146,22 +147,22 @@
 
 % 全局奇偶页页眉设置
 \fancyhead[CO]{% 奇数页居中
-    \songti\fontsize{9pt}{11pt}\selectfont 计算机信息工程学院毕业设计说明书
+    \kai\fontsize{10.5pt}{12pt}\selectfont 计算机信息工程学院毕业设计说明书
 }
 \fancyhead[CE]{% 偶数页居中
-    \songti\fontsize{9pt}{11pt}\selectfont \@title%
+    \kai\fontsize{10.5pt}{12pt}\selectfont \@title%
 }
 
 % 页脚设置
 \fancyfoot[C]{\Times\fontsize{9pt}{11pt}\selectfont\thepage}
 \fancypagestyle{abstract}{
     \fancyhf{}
-    \fancyhead[C]{\fontsize{10.5pt}{12pt}\kai{计算机信息工程学院毕业设计说明书}}
+    \fancyhead[C]{\kai\fontsize{10.5pt}{12pt}\selectfont 计算机信息工程学院毕业设计说明书}
     \fancyfoot{}
 }
 \fancypagestyle{englishabstract}{
     \fancyhf{}
-    \fancyhead[C]{\fontsize{10.5pt}{12pt}\kai{计算机信息工程学院毕业设计说明书}}
+    \fancyhead[C]{\kai\fontsize{10.5pt}{12pt}\selectfont 计算机信息工程学院毕业设计说明书}
     \fancyfoot{}
 }
 
@@ -477,7 +478,7 @@
 % 针对插图：图号图题在下
 \captionsetup[figure]{position=bottom, skip=10pt}
 % 针对表格：表号表题在上
-\captionsetup[table]{position=top, skip=10pt}
+\captionsetup[table]{position=top}
 
 % 公式括号形式
 \makeatletter
@@ -544,18 +545,6 @@
 {
     \clearpage
 }
-% 先定义 listing 浮动体
-\DeclareFloatingEnvironment[
-    fileext=lol,
-    listname={代码清单},
-    name={图},
-    placement=H
-]{listing}
-
-% 设置代码编号按章排序，例如：图 3－1
-\counterwithin{listing}{section}
-\renewcommand{\thelisting}{\thesection-\arabic{listing}}
-
 % 设置算法编号按章排序，例如：算法 3-1
 \counterwithin{algorithm}{section}
 \renewcommand{\thealgorithm}{\thesection-\arabic{algorithm}}
