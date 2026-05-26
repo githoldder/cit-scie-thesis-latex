@@ -92,12 +92,13 @@
 }
 \newcolumntype{Y}{>{\centering\arraybackslash}X}
 % 2. 版面设置
+% 前置部分（声明/摘要/目录）使用 3.0cm 左右边距；正文在 \mainbody 中切换到 2.1cm
 \geometry{
     a4paper,
     top=2.5cm,          % 上边距
     bottom=2.5cm,       % 下边距
-    left=2.1cm,         % 左边距
-    right=2.1cm,        % 右边距
+    left=3.0cm,         % 左边距（前置）
+    right=3.0cm,        % 右边距（前置）
     bindingoffset=0.5cm,% 装订线（左侧 0.5cm）
     headheight=18pt,    % 页眉高度（fancyhdr 要求 ≥18pt）
     headsep=0.5cm,      % 算式：top(2.5) - 页眉(1.5) - headheight 约等于 0.5cm
@@ -297,8 +298,8 @@
         \draw (ReviewingTeacherTitleContents.south west) -- (ReviewingTeacherTitleContents.south east);
         
         \node[above=3.40cm, xshift=5mm] at (current page.south) {
-    		\color{black}\centering\songti\fontsize{15pt}{15pt}
-    		\yeartochinese{\@Year}年\monthtochinese{\@Month}月
+    		\color{black}\centering\songti\Times\fontsize{15pt}{20pt}\selectfont
+    		\@Year 年\number\@Month 月
 };
     \end{tikzpicture}
     \newpage
@@ -312,7 +313,7 @@
 
     % 标题
     \begin{center}
-        {\songti\bfseries\fontsize{22pt}{33pt}\selectfont 毕业论文（设计）独创性声明}
+        {\songti\fontsize{22pt}{33pt}\selectfont 毕业论文（设计）独创性声明}
     \end{center}
     
     \vspace{1.5\baselineskip}
@@ -340,7 +341,7 @@
 
     {
         \centering
-        {\fontsize{16pt}{20pt}\selectfont \textbf{#1}\par}
+        {\fontsize{16pt}{20pt}\selectfont #1\par}
         {\bfseries 摘~~要\par}
     }
 
@@ -361,7 +362,7 @@
     {
         \centering
         {\Arial\bfseries\fontsize{14pt}{20pt}\selectfont \MakeUppercase{#1}\par}
-        {\Arial\bfseries\fontsize{14pt}{20pt}\selectfont ABSTRACT\par}
+        {\Arial\bfseries\fontsize{14pt}{20pt}\selectfont Abstract\par}
     }
     \def\tempekeywords{#2}
 }
@@ -399,19 +400,19 @@
 \renewcommand{\cftsecfont}{\tocfont\bfseries}
 \setlength{\cftsecindent}{0em}
 \setlength{\cftsecnumwidth}{3.5em}
-\setlength{\cftbeforesecskip}{0pt}
+\setlength{\cftbeforesecskip}{6pt}
 
 % 二级标题
 \renewcommand{\cftsubsecfont}{\tocfont}
 \setlength{\cftsubsecindent}{2em}
 \setlength{\cftsubsecnumwidth}{1.5em}
-\setlength{\cftbeforesubsecskip}{0pt}
+\setlength{\cftbeforesubsecskip}{6pt}
 
 % 三级标题
 \renewcommand{\cftsubsubsecfont}{\tocfont}
 \setlength{\cftsubsubsecindent}{4em}
 \setlength{\cftsubsubsecnumwidth}{1.5em}
-\setlength{\cftbeforesubsubsecskip}{0pt}
+\setlength{\cftbeforesubsubsecskip}{6pt}
 
 \newcommand{\contents}
 {
@@ -432,8 +433,22 @@
 \newcommand{\mainbody}
 {
     \clearpage
+    % 切换到正文页边距：左右 2.1cm
+    \newgeometry{
+        top=2.5cm,
+        bottom=2.5cm,
+        left=2.1cm,
+        right=2.1cm,
+        bindingoffset=0.5cm,
+        headheight=18pt,
+        headsep=0.5cm,
+        footskip=0.75cm
+    }
+    % fancyhdr 的 \headwidth 在 \begin{document} 时锁定为前置部分的 \textwidth，
+    % 这里手动同步成正文新的 \textwidth，让页眉横线与正文同宽
+    \setlength{\headwidth}{\textwidth}
     \pagestyle{fancy}
-    \pagenumbering{arabic} 
+    \pagenumbering{arabic}
 	\fancyfoot[C]{\Times\fontsize{9pt}{11pt}\selectfont\thepage}
 }
 
@@ -536,7 +551,6 @@
     
     % 使用正文一级标题样式（不编号）
     \section*{附录}
-    \addcontentsline{toc}{section}{附录}
     
     % 正文格式（与主体一致）
     \songti\Times\fontsize{12pt}{20pt}\selectfont
