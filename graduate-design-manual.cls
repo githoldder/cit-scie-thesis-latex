@@ -92,13 +92,12 @@
 }
 \newcolumntype{Y}{>{\centering\arraybackslash}X}
 % 2. 版面设置
-% 前置部分（声明/摘要/目录）使用 3.0cm 左右边距；正文在 \mainbody 中切换到 2.1cm
 \geometry{
     a4paper,
     top=2.5cm,          % 上边距
     bottom=2.5cm,       % 下边距
-    left=3.0cm,         % 左边距（前置）
-    right=3.0cm,        % 右边距（前置）
+    left=2.1cm,         % 左边距
+    right=2.1cm,        % 右边距
     bindingoffset=0.5cm,% 装订线（左侧 0.5cm）
     headheight=18pt,    % 页眉高度（fancyhdr 要求 ≥18pt）
     headsep=0.5cm,      % 算式：top(2.5) - 页眉(1.5) - headheight 约等于 0.5cm
@@ -433,20 +432,6 @@
 \newcommand{\mainbody}
 {
     \clearpage
-    % 切换到正文页边距：左右 2.1cm
-    \newgeometry{
-        top=2.5cm,
-        bottom=2.5cm,
-        left=2.1cm,
-        right=2.1cm,
-        bindingoffset=0.5cm,
-        headheight=18pt,
-        headsep=0.5cm,
-        footskip=0.75cm
-    }
-    % fancyhdr 的 \headwidth 在 \begin{document} 时锁定为前置部分的 \textwidth，
-    % 这里手动同步成正文新的 \textwidth，让页眉横线与正文同宽
-    \setlength{\headwidth}{\textwidth}
     \pagestyle{fancy}
     \pagenumbering{arabic}
 	\fancyfoot[C]{\Times\fontsize{9pt}{11pt}\selectfont\thepage}
